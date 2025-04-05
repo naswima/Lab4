@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://bcbdbekevw7wm"]
+
+[ext_resource type="Script" uid="uid://d1ctjqk8apq7l" path="res://player.gd" id="1_0f027"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0f027"]
+
+[sub_resource type="Sky" id="Sky_2c62f"]
+sky_material = SubResource("PanoramaSkyMaterial_0f027")
+
+[sub_resource type="Environment" id="Environment_0f027"]
+background_mode = 1
+background_color = Color(0.534765, 0.762087, 0.796517, 1)
+sky = SubResource("Sky_2c62f")
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_gyfs4"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d5x1h"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8mm7a"]
+
+[node name="MainScene" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0f027")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 2, -6)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Camera3D"]
+transform = Transform3D(-1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0)
+rotation_order = 0
+top_level = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.25, 0)
+material_override = SubResource("ORMMaterial3D_gyfs4")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_0f027")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0335652, -0.95639, 0.205526)
+shape = SubResource("CapsuleShape3D_d5x1h")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_8mm7a")
